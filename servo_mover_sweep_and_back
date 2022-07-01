@@ -1,0 +1,61 @@
+/*
+ * This program demonstrates how the servo motor can be used in an Arduino program.
+ * The motor will rotate 180 degrees and then quickly rotate back before repeating the process.
+ * This example assumes that the signal wire for the motor is connected to PIN 10 on the Arduino.
+ * 
+ * Author: Mr Offner
+ **** Modified By Ben Michaels for variable slow sweep ****
+ * 
+ * Parts Needed:
+ *  Arduino                     x1
+ *  USB Cable                   x1
+ *  Servo motor                 x1
+ *  Male-to-male jumper wire    x3
+ *
+ * Construction:
+ *  Connect the three jumper wires to the three wires from the servo
+ *  The BROWN wire from the servo goes into GND
+ *  The RED wire from the servo goes into 5V
+ *  The ORANGE wire from the servo goes into PIN 10
+ *  
+ */
+
+//Include the servo library in the program
+#include <Servo.h>
+
+Servo motor;  //Define a servo, called 'motor'
+
+int pinServo = 10;  //Define pinServo as an integer with a value of 10
+
+int angle = 0;  //Define a variable called angle, with a value of 0
+
+bool reverse = false;
+int angleHigh = 90;
+
+void setup() {
+  motor.attach(pinServo); //Tell the program that the servo is connected to pinServo (10)
+  motor.write(angle); //Adjust the servo to the starting position (0)
+}
+
+void loop() {
+  if (angle >= angleHigh)
+  {
+    reverse = true;
+  }
+  if (angle <= 0)
+  {
+    reverse = false;
+  }
+  if (reverse == false)
+  {
+    angle += 1;
+  }
+  else
+  {
+    angle -= 1;
+  }
+  
+  motor.write(angle); //Turn the servo to the new angle
+  delay(1000); 
+
+}
